@@ -8,57 +8,317 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#0d0a0e">
   <meta name="description" content="A special 3D bouquet — a late birthday gift made with love.">
-  <title>For You 💐</title>
+  <title>For You</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- ====== INTRO SCREEN ====== -->
+  <!-- ====== INTRO SCREEN (WHATSAPP CHAT THEME) ====== -->
   <div id="intro-screen">
-    <!-- Floating SVG shapes (no emojis) -->
-    <div class="floating-shapes" aria-hidden="true">
-      <svg class="float-shape" style="--delay:0s;--x:8%;--dur:6s" viewBox="0 0 24 24" width="18" height="18"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor"/></svg>
-      <svg class="float-shape" style="--delay:1.2s;--x:22%;--dur:5.2s" viewBox="0 0 24 24" width="14" height="14"><path d="M12 2l2.4 7.2H22l-6 4.8 2.4 7.2L12 16.4l-6.4 4.8 2.4-7.2-6-4.8h7.6z" fill="currentColor"/></svg>
-      <svg class="float-shape flower-shape" style="--delay:0.6s;--x:40%;--dur:7s" viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="8" r="2.5" fill="currentColor"/><circle cx="8.5" cy="11" r="2.5" fill="currentColor"/><circle cx="15.5" cy="11" r="2.5" fill="currentColor"/><circle cx="10" cy="14.5" r="2.5" fill="currentColor"/><circle cx="14" cy="14.5" r="2.5" fill="currentColor"/><circle cx="12" cy="11.5" r="2" fill="currentColor" opacity="0.7"/></svg>
-      <svg class="float-shape" style="--delay:2.1s;--x:60%;--dur:5.6s" viewBox="0 0 24 24" width="16" height="16"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor"/></svg>
-      <svg class="float-shape" style="--delay:1.7s;--x:78%;--dur:6.4s" viewBox="0 0 24 24" width="12" height="12"><path d="M12 2l2.4 7.2H22l-6 4.8 2.4 7.2L12 16.4l-6.4 4.8 2.4-7.2-6-4.8h7.6z" fill="currentColor"/></svg>
-      <svg class="float-shape" style="--delay:0.9s;--x:90%;--dur:5.8s" viewBox="0 0 24 24" width="15" height="15"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor"/></svg>
-      <svg class="float-shape sparkle-shape" style="--delay:2.5s;--x:50%;--dur:6.2s" viewBox="0 0 24 24" width="14" height="14"><path d="M12 0l1.8 8.5L22 12l-8.2 3.5L12 24l-1.8-8.5L2 12l8.2-3.5z" fill="currentColor"/></svg>
-      <svg class="float-shape" style="--delay:1.4s;--x:32%;--dur:5.4s" viewBox="0 0 24 24" width="13" height="13"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor"/></svg>
-    </div>
-
-    <div class="intro-content">
-      <div class="chat-sequence">
-        <div class="chat-bubble left" id="bubble1">
-          <span>haiii haii halooo</span>
+    <div class="wa-app-window">
+      <!-- WhatsApp Incoming Notification Banner -->
+      <div class="wa-notif-banner hidden" id="waNotifBanner">
+        <div class="wa-notif-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="#25D366">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
         </div>
-        <div class="chat-bubble left" id="bubble2">
-          <span>Happy Late Birthday yaaa!!!</span>
-        </div>
-        <div class="chat-bubble left" id="bubble3">
-          <span>maafin telat yaaa, soalnya kemarin belum kenal HAHAHA</span>
-        </div>
-        <div class="chat-bubble left" id="bubble4">
-          <span>jangan sedih" lagiiiii</span>
-          <span class="highlight">Happy late birthday sekali lagii!</span>
+        <div class="wa-notif-content">
+          <div class="wa-notif-top">
+            <span class="wa-notif-app">WhatsApp</span>
+            <span class="wa-notif-time">sekarang</span>
+          </div>
+          <div class="wa-notif-sender">Daniel</div>
+          <div class="wa-notif-text">haiii haii halooo renaa...</div>
+          <div class="wa-notif-hint">Ketuk untuk membuka pesan</div>
         </div>
       </div>
 
-      <div class="gift-section" id="giftSection">
-        <div class="gift-box" id="giftBox">
-          <div class="gift-lid">
-            <div class="gift-ribbon-top"></div>
+      <!-- WhatsApp Background Wallpaper (40% Opacity) -->
+      <div class="wa-doodle-bg" aria-hidden="true"></div>
+
+      <!-- WhatsApp Header -->
+      <header class="wa-header">
+        <div class="wa-header-left">
+          <button class="wa-icon-btn" aria-label="Back" type="button">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+          </button>
+          <div class="wa-avatar-wrap">
+            <div class="wa-avatar">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="#f8bbd0">
+                <circle cx="12" cy="7.5" r="2.5"/>
+                <circle cx="8" cy="11" r="2.5"/>
+                <circle cx="16" cy="11" r="2.5"/>
+                <circle cx="9.5" cy="15.5" r="2.5"/>
+                <circle cx="14.5" cy="15.5" r="2.5"/>
+                <circle cx="12" cy="11.8" r="2" fill="#d4a853"/>
+              </svg>
+            </div>
+            <span class="wa-online-dot"></span>
           </div>
-          <div class="gift-body">
-            <div class="gift-ribbon-v"></div>
-            <div class="gift-ribbon-h"></div>
+          <div class="wa-contact-info">
+            <h1 class="wa-contact-name">Daniel</h1>
+            <span class="wa-contact-status" id="waStatus">online</span>
           </div>
-          <div class="gift-shadow"></div>
         </div>
-        <p class="gift-tap-text">tap to open!</p>
+
+        <div class="wa-header-actions">
+          <button class="wa-icon-btn" aria-label="Video Call" type="button">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/>
+            </svg>
+          </button>
+          <button class="wa-icon-btn" aria-label="Voice Call" type="button">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor">
+              <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.44-5.15-3.75-6.59-6.59l1.97-1.57c.28-.27.36-.67.25-1.02A11.36 11.36 0 018.96 4c0-.55-.45-1-1-1H4.21c-.55 0-1 .45-1 1 8.94 16.48 16.8 16.8 16.8 16.8.55 0 1-.45 1-1v-3.75c0-.55-.45-1-1-1z"/>
+            </svg>
+          </button>
+          <button class="wa-icon-btn" aria-label="Menu" type="button">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor">
+              <circle cx="12" cy="5" r="2"/>
+              <circle cx="12" cy="12" r="2"/>
+              <circle cx="12" cy="19" r="2"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- WhatsApp Audio Status Bar -->
+      <div class="wa-audio-bar" id="waAudioBar">
+        <button type="button" class="wa-audio-play-btn" id="waAudioPlayBtn" aria-label="Play / Pause Audio">
+          <svg class="wa-play-icon" id="waPlayIcon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+            <polygon points="6 4 20 12 6 20 6 4"></polygon>
+          </svg>
+          <svg class="wa-pause-icon hidden" id="waPauseIcon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+            <rect x="6" y="4" width="4" height="16"></rect>
+            <rect x="14" y="4" width="4" height="16"></rect>
+          </svg>
+        </button>
+
+        <div class="wa-audio-track-info">
+          <div class="wa-audio-waves" id="waAudioWaves">
+            <span class="wa-wave-bar"></span>
+            <span class="wa-wave-bar"></span>
+            <span class="wa-wave-bar"></span>
+            <span class="wa-wave-bar"></span>
+          </div>
+          <span class="wa-audio-title">Miguel — Coffee</span>
+        </div>
+
+        <div class="wa-audio-vol-wrap">
+          <svg class="wa-vol-icon" viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+          </svg>
+          <input type="range" class="wa-vol-slider" id="waVolSlider" min="0" max="100" value="50" aria-label="Volume Musik">
+          <span class="wa-vol-text" id="waVolText">50%</span>
+        </div>
       </div>
+
+      <!-- WhatsApp Chat Body -->
+      <main class="wa-chat-body" id="waChatBody">
+        <!-- Date separator -->
+        <div class="wa-date-pill">
+          <span>HARI INI</span>
+        </div>
+
+        <!-- Security encryption notice -->
+        <div class="wa-encryption-pill">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor">
+            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+          </svg>
+          <span>Pesan ini dienkripsi end-to-end. Dibuat khusus hanya untuk kamu.</span>
+        </div>
+
+        <!-- Chat message thread -->
+        <div class="wa-messages-thread">
+          <!-- Bubble 1 -->
+          <div class="wa-bubble-row incoming" id="bubble1">
+            <div class="wa-bubble incoming">
+              <div class="wa-bubble-content">
+                <p id="bubbleText1"></p>
+              </div>
+              <div class="wa-bubble-meta">
+                <span class="wa-time">00:00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bubble 2 -->
+          <div class="wa-bubble-row incoming" id="bubble2">
+            <div class="wa-bubble incoming">
+              <div class="wa-bubble-content">
+                <p id="bubbleText2"></p>
+              </div>
+              <div class="wa-bubble-meta">
+                <span class="wa-time">00:00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bubble 3 -->
+          <div class="wa-bubble-row incoming" id="bubble3">
+            <div class="wa-bubble incoming">
+              <div class="wa-bubble-content">
+                <p id="bubbleText3"></p>
+              </div>
+              <div class="wa-bubble-meta">
+                <span class="wa-time">00:01</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bubble 4 -->
+          <div class="wa-bubble-row incoming" id="bubble4">
+            <div class="wa-bubble incoming">
+              <div class="wa-bubble-content">
+                <p id="bubbleText4a"></p>
+                <p class="wa-highlight" id="bubbleText4b"></p>
+              </div>
+              <div class="wa-bubble-meta">
+                <span class="wa-time">00:01</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Gift Attachment Card (WhatsApp Luxury Parcel) -->
+          <div class="wa-bubble-row incoming wa-gift-row" id="giftSection">
+            <div class="wa-bubble incoming wa-gift-bubble">
+              <div class="wa-gift-display">
+                <div class="gift-stage">
+                  <div class="gift-box" id="giftBox" role="button" aria-label="Buka bingkisan kado">
+                    <svg class="gift-svg" viewBox="0 0 160 145" width="138" height="125" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <!-- Gold Metallic Gradient -->
+                        <linearGradient id="goldSheen" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stop-color="#fff5d9"/>
+                          <stop offset="25%" stop-color="#e8c779"/>
+                          <stop offset="50%" stop-color="#fdf4d8"/>
+                          <stop offset="75%" stop-color="#b68832"/>
+                          <stop offset="100%" stop-color="#805b18"/>
+                        </linearGradient>
+                        <!-- Velvet Box Gradient -->
+                        <linearGradient id="velvetBody" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stop-color="#461726"/>
+                          <stop offset="40%" stop-color="#320f1a"/>
+                          <stop offset="100%" stop-color="#1e060f"/>
+                        </linearGradient>
+                        <!-- Velvet Lid Gradient -->
+                        <linearGradient id="velvetLid" x1="0%" y1="0%" x2="0%" y2="100%">
+                          <stop offset="0%" stop-color="#581e30"/>
+                          <stop offset="35%" stop-color="#3d1320"/>
+                          <stop offset="100%" stop-color="#240712"/>
+                        </linearGradient>
+                        <filter id="boxShadow" x="-20%" y="-20%" width="140%" height="140%">
+                          <feDropShadow dx="0" dy="8" stdDeviation="7" flood-color="#000000" flood-opacity="0.45"/>
+                        </filter>
+                      </defs>
+
+                      <!-- Soft Floor Shadow -->
+                      <ellipse cx="80" cy="134" rx="56" ry="7" fill="rgba(0,0,0,0.55)" filter="blur(3px)"/>
+
+                      <!-- Box Body -->
+                      <g class="svg-gift-body" filter="url(#boxShadow)">
+                        <rect x="28" y="60" width="104" height="68" rx="10" fill="url(#velvetBody)"/>
+                        <rect x="29" y="61" width="102" height="66" rx="9" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+                        <!-- Ribbons on Body -->
+                        <rect x="72" y="60" width="16" height="68" fill="url(#goldSheen)"/>
+                        <rect x="28" y="88" width="104" height="15" fill="url(#goldSheen)"/>
+                        <!-- Ribbon Cross Shadow -->
+                        <rect x="72" y="88" width="16" height="15" fill="rgba(0,0,0,0.15)"/>
+                        <!-- Subtle Body Sheen -->
+                        <path d="M 28 60 L 65 60 L 28 97 Z" fill="rgba(255,255,255,0.06)"/>
+                      </g>
+
+                      <!-- Dangling Gift Tag for Rena -->
+                      <g class="svg-gift-tag">
+                        <path d="M 75 46 Q 64 60 54 68" fill="none" stroke="#e8c779" stroke-width="1.2" stroke-linecap="round"/>
+                        <g transform="translate(36, 68) rotate(-10)">
+                          <rect x="0" y="0" width="38" height="18" rx="4" fill="#180e14" stroke="#deb86a" stroke-width="1"/>
+                          <circle cx="5" cy="9" r="1.8" fill="#deb86a"/>
+                          <text x="21" y="12.5" text-anchor="middle" font-family="'Lora', Georgia, serif" font-style="italic" font-size="8.5" font-weight="600" fill="#fdf4d8" letter-spacing="0.04em">Rena</text>
+                        </g>
+                      </g>
+
+                      <!-- Box Lid & Bow -->
+                      <g class="svg-gift-lid" filter="url(#boxShadow)">
+                        <rect x="22" y="40" width="116" height="23" rx="7" fill="url(#velvetLid)"/>
+                        <rect x="23" y="41" width="114" height="21" rx="6" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+                        <!-- Lid Ribbon -->
+                        <rect x="72" y="40" width="16" height="23" fill="url(#goldSheen)"/>
+
+                        <!-- Left Bow Loop -->
+                        <path d="M 80 43 C 58 20, 36 28, 44 41 C 50 49, 70 47, 80 43 Z" fill="url(#goldSheen)"/>
+                        <path d="M 50 36 C 54 30, 66 31, 74 41" fill="none" stroke="#805b18" stroke-width="1.2" opacity="0.6"/>
+
+                        <!-- Right Bow Loop -->
+                        <path d="M 80 43 C 102 20, 124 28, 116 41 C 110 49, 90 47, 80 43 Z" fill="url(#goldSheen)"/>
+                        <path d="M 110 36 C 106 30, 94 31, 86 41" fill="none" stroke="#805b18" stroke-width="1.2" opacity="0.6"/>
+
+                        <!-- Bow Tails -->
+                        <path d="M 75 44 Q 62 58 58 74 Q 66 70 73 66 Q 76 54 77 44 Z" fill="url(#goldSheen)"/>
+                        <path d="M 85 44 Q 98 58 102 74 Q 94 70 87 66 Q 84 54 83 44 Z" fill="url(#goldSheen)"/>
+
+                        <!-- Center Knot -->
+                        <ellipse cx="80" cy="43" rx="8" ry="6.5" fill="url(#goldSheen)" stroke="#805b18" stroke-width="0.8"/>
+                      </g>
+                    </svg>
+                  </div>
+                </div>
+
+                <div class="wa-gift-instructions">
+                  <h2 class="wa-gift-title">A Gift for Rena</h2>
+                  <p class="wa-gift-sub">Ketuk kado untuk membuka.</p>
+                </div>
+              </div>
+
+              <div class="wa-gift-actions">
+                <button type="button" class="wa-open-btn" id="openGiftBtn">
+                  <span>Buka Bingkisan</span>
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                    <path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42L16.86 11H5v2z"/>
+                  </svg>
+                </button>
+              </div>
+
+              <div class="wa-bubble-meta">
+                <span class="wa-time">00:02</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- WhatsApp Footer / Input Bar -->
+      <footer class="wa-footer">
+        <div class="wa-input-pill">
+          <button class="wa-icon-btn wa-input-icon" aria-label="Emoji" type="button">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
+            </svg>
+          </button>
+          <input type="text" class="wa-text-input" placeholder="Ketik pesan..." readonly aria-label="Input pesan WhatsApp">
+          <button class="wa-icon-btn wa-input-icon" aria-label="Attach" type="button">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5a2.5 2.5 0 015 0v10.5c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5V6H9v9.5a3 3 0 006 0V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"/>
+            </svg>
+          </button>
+          <button class="wa-icon-btn wa-input-icon" aria-label="Camera" type="button">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <circle cx="12" cy="12" r="3.2"/>
+              <path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
+            </svg>
+          </button>
+        </div>
+        <button class="wa-mic-btn" aria-label="Voice Note" type="button">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.49 6-3.31 6-6.72h-1.7z"/>
+          </svg>
+        </button>
+      </footer>
     </div>
   </div>
 
@@ -66,19 +326,64 @@
   <div id="main-scene" class="hidden">
     <canvas id="flower-canvas"></canvas>
 
-    <!-- Message overlay — recipient writes to you -->
+    <!-- Floating Music Controller (Miguel - Coffee) with Volume Control -->
+    <div id="musicController3D" class="music-controller-3d paused">
+      <button id="musicPlayBtn3D" class="music-play-btn" type="button" title="Putar / Jeda Musik" aria-label="Toggle background music">
+        <div class="music-icon-wrap">
+          <span class="music-bar bar-1"></span>
+          <span class="music-bar bar-2"></span>
+          <span class="music-bar bar-3"></span>
+        </div>
+        <span class="music-label">Miguel — Coffee</span>
+      </button>
+
+      <div class="music-vol-control">
+        <svg class="music-vol-icon" viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+        <input type="range" class="music-vol-slider" id="musicVolSlider3D" min="0" max="100" value="50" aria-label="Volume Musik">
+        <span class="music-vol-text" id="musicVolText3D">50%</span>
+      </div>
+    </div>
+
+    <!-- Message overlay — 2D Luxury Card & WhatsApp Reply -->
     <div id="message-layer">
+      <div class="message-card-backdrop" id="messageBackdrop"></div>
       <div class="message-card" id="messageCard">
         <div class="card-inner">
+          <button id="cardCloseBtn" class="card-close" aria-label="Tutup pesan">&times;</button>
+          
+          <div class="card-header-bar">
+            <span class="card-atelier-badge">❦ LUXURY FLORAL ATELIER</span>
+            <div class="card-badge">For Rena</div>
+          </div>
+
           <p class="card-prompt">suka gak bunganya?</p>
-          <p class="card-sub">WKWKKWKW boleh lah yaaaa</p>
+          <p class="card-sub">Semoga kamu suka ya...</p>
+
+          <div class="card-letter-content">
+            <p class="card-letter-body">
+              Rena lucu imut cantik, kamu kuat, kamu hebat jangan sedih sedih terus yaaa! aku disini temenin kamuu. Happy Birthday yaaa, maaf telatt karena kita baru deket nya sekaranggg, sehat selalu kamu, tetep kuat teruss dan selalu mengandalkan Tuhan Yesus yaa! Thank you for coming into my life and making it better. I love youuuuuuuuuuuuuu!
+            </p>
+            <p class="card-letter-sign">with all my love,<br><span class="signature-name">Daniel</span></p>
+          </div>
+
           <div class="card-divider"><span class="divider-icon">&#10047;</span></div>
-          <textarea id="msgInput" class="msg-textarea" placeholder="ketik pesan kamu di sini..." rows="3" maxlength="500"></textarea>
-          <a id="waButton" class="wa-button" href="#" target="_blank" rel="noopener noreferrer">
-            <svg class="wa-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            <span>kirim ke WhatsApp</span>
-          </a>
-          <p class="card-note">pesan kamu akan dikirim lewat WhatsApp</p>
+
+          <div class="reply-section">
+            <span class="reply-title">Kirim balasan ke Daniel:</span>
+            <div class="quick-chips" id="quickChips">
+              <button type="button" class="chip-btn" data-text="Suka bangeeet! Makasih yaa Daniel!">Suka bangeeet!</button>
+              <button type="button" class="chip-btn" data-text="Bunganya cantik banget, makasih yaa Daniel!">Bunganya cantik banget!</button>
+              <button type="button" class="chip-btn" data-text="Makasih banyak ya Daniel, suka banget!">Makasih Daniel!</button>
+            </div>
+            <textarea id="msgInput" class="msg-textarea" placeholder="ketik balasan kamu di sini..." rows="3" maxlength="500"></textarea>
+            <a id="waButton" class="wa-button" href="#" target="_blank" rel="noopener noreferrer">
+              <svg class="wa-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              <span>kirim ke WhatsApp</span>
+            </a>
+            <p class="card-note">pesan kamu akan dikirim langsung ke WhatsApp Daniel</p>
+          </div>
         </div>
       </div>
     </div>
@@ -110,8 +415,18 @@
     </button>
   </div>
 
+  <!-- Background Music Audio -->
+  <audio id="bgMusic" src="Miguel%20-%20coffee%20(Official%20Audio).mp3" preload="auto" loop autoplay></audio>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script>
+    if (typeof THREE.GLTFLoader === 'undefined') {
+      document.write('<script src="GLTFLoader.js"><\/script>');
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="flower.js"></script>
 </body>
 </html>

@@ -43,8 +43,25 @@ html, body {
 }
 
 /* =========================================
-   INTRO SCREEN
+   INTRO SCREEN (WHATSAPP CHAT THEME)
    ========================================= */
+:root {
+  --wa-bg: #0b141a;
+  --wa-header-bg: #1f2c34;
+  --wa-footer-bg: #1f2c34;
+  --wa-bubble-incoming: #202c33;
+  --wa-bubble-outgoing: #005c4b;
+  --wa-text-primary: #e9edef;
+  --wa-text-secondary: #8696a0;
+  --wa-text-link: #53bdeb;
+  --wa-accent: #00a884;
+  --wa-accent-light: #25d366;
+  --wa-border: #222e35;
+  --wa-input-bg: #2a3942;
+  --wa-icon: #8696a0;
+  --wa-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
 #intro-screen {
   position: fixed;
   inset: 0;
@@ -52,237 +69,647 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(ellipse at 50% 40%, #2a1428 0%, #150d14 50%, #0d0a0e 100%);
-  transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1),
+  background-color: #070b0e;
+  font-family: var(--wa-font);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
               transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
-  padding-top: var(--sat);
-  padding-bottom: var(--sab);
 }
 
 #intro-screen.exit {
   opacity: 0;
-  transform: scale(1.1);
+  transform: scale(1.06);
   pointer-events: none;
 }
 
-/* ── Floating SVG Shapes ──────────── */
-.floating-shapes {
+/* WhatsApp Phone / Window Shell */
+.wa-app-window {
+  width: 100%;
+  max-width: 480px;
+  height: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--wa-bg);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+@media (min-width: 540px) {
+  .wa-app-window {
+    height: 94vh;
+    max-height: 860px;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+/* Generic Hidden Utility */
+.hidden {
+  display: none !important;
+}
+
+/* ── WhatsApp Incoming Notification Banner ── */
+.wa-notif-banner {
+  position: absolute;
+  top: calc(12px + var(--sat, 0px));
+  left: 12px;
+  right: 12px;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: rgba(31, 44, 52, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  animation: waNotifSlideIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.wa-notif-banner:active {
+  transform: scale(0.98);
+}
+
+.wa-notif-banner.exit {
+  animation: waNotifSlideOut 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.wa-notif-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(37, 211, 102, 0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid rgba(37, 211, 102, 0.3);
+}
+
+.wa-notif-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wa-notif-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: #8696a0;
+  letter-spacing: 0.3px;
+}
+
+.wa-notif-app {
+  font-weight: 700;
+  color: #25d366;
+}
+
+.wa-notif-time {
+  font-size: 0.68rem;
+  color: #8696a0;
+}
+
+.wa-notif-sender {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #e9edef;
+  line-height: 1.2;
+}
+
+.wa-notif-text {
+  font-size: 0.82rem;
+  color: #d1d7db;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+
+.wa-notif-hint {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #25d366;
+  margin-top: 3px;
+  animation: waNotifPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes waNotifSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-24px) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes waNotifSlideOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-26px) scale(0.96);
+  }
+}
+
+@keyframes waNotifPulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+/* ── WhatsApp Header ───────────────── */
+.wa-header {
+  height: 60px;
+  background-color: var(--wa-header-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+  padding-top: var(--sat);
+  border-bottom: 1px solid var(--wa-border);
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+.wa-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.wa-icon-btn {
+  background: none;
+  border: none;
+  color: var(--wa-icon);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.wa-icon-btn:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+  color: var(--wa-text-primary);
+}
+
+.wa-icon-btn:active {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.wa-avatar-wrap {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+}
+
+.wa-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2d182e, #4a1f3d);
+  border: 1px solid rgba(229, 115, 151, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.wa-online-dot {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background-color: var(--wa-accent);
+  border: 2px solid var(--wa-header-bg);
+}
+
+.wa-contact-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 0.4rem;
+  overflow: hidden;
+}
+
+.wa-contact-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--wa-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.01em;
+}
+
+.wa-contact-status {
+  font-size: 0.75rem;
+  color: var(--wa-accent);
+  transition: color 0.3s ease;
+}
+
+.wa-contact-status.typing {
+  color: var(--wa-accent-light);
+  font-style: italic;
+}
+
+.wa-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+/* ── WhatsApp Chat Body ────────────── */
+.wa-chat-body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  padding: 0.8rem 0.8rem 1rem;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  z-index: 1;
+}
+
+/* WhatsApp Background Wallpaper (40% Opacity) */
+.wa-doodle-bg {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  overflow: hidden;
+  opacity: 0.4;
+  background-image: url('whatsapp-background.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
 }
 
-.float-shape {
-  position: absolute;
-  top: 100%;
-  left: var(--x);
-  color: var(--rose-light);
-  opacity: 0.1;
-  animation: floatUp var(--dur) ease-in-out var(--delay) infinite;
-  will-change: transform, opacity;
-}
-
-.float-shape.sparkle-shape {
-  color: var(--gold);
-  opacity: 0.12;
-}
-
-.float-shape.flower-shape {
-  color: var(--rose-petal);
-  opacity: 0.08;
-}
-
-@keyframes floatUp {
-  0% {
-    transform: translateY(0) rotate(0deg) scale(0.8);
-    opacity: 0;
-  }
-  10% { opacity: 0.12; }
-  85% { opacity: 0.1; }
-  100% {
-    transform: translateY(-110vh) rotate(360deg) scale(1);
-    opacity: 0;
-  }
-}
-
-.intro-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-  max-width: 400px;
-  width: 90%;
-  z-index: 2;
-}
-
-/* ── Chat Bubbles ─────────────────── */
-.chat-sequence {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  width: 100%;
-}
-
-.chat-bubble {
-  max-width: 82%;
-  padding: 0.65rem 1rem;
-  border-radius: 18px;
-  font-size: 0.85rem;
-  line-height: 1.5;
-  opacity: 0;
-  transform: translateY(15px) scale(0.9);
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-
-.chat-bubble.left {
-  align-self: flex-start;
-  background: rgba(255, 255, 255, 0.08);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-bottom-left-radius: 6px;
-  color: var(--text-light);
-}
-
-.chat-bubble.right {
-  align-self: flex-end;
-  background: linear-gradient(135deg, rgba(194, 24, 91, 0.35), rgba(139, 26, 58, 0.25));
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(229, 115, 151, 0.12);
-  border-bottom-right-radius: 6px;
-  color: var(--rose-blush);
-}
-
-.chat-bubble .highlight {
-  color: var(--gold-light);
+/* Badges / Pills */
+.wa-date-pill {
+  align-self: center;
+  background-color: #182229;
+  color: var(--wa-text-secondary);
+  font-size: 0.7rem;
   font-weight: 600;
-  font-size: 0.83rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 8px;
+  margin: 0.4rem 0 0.6rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  z-index: 1;
 }
 
-.chat-bubble.show {
-  animation: bubblePop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+.wa-encryption-pill {
+  align-self: center;
+  max-width: 90%;
+  background-color: #182229;
+  color: #ffd279;
+  font-size: 0.7rem;
+  line-height: 1.35;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 210, 121, 0.12);
+  z-index: 1;
 }
 
-@keyframes bubblePop {
-  0% { opacity: 0; transform: translateY(15px) scale(0.9); }
-  100% { opacity: 1; transform: translateY(0) scale(1); }
+.wa-encryption-pill svg {
+  flex-shrink: 0;
+  color: #ffd279;
 }
 
-/* ── Gift Box ─────────────────────── */
-.gift-section {
+/* ── Message Thread & Bubbles ───────── */
+.wa-messages-thread {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  width: 100%;
+  z-index: 1;
+}
+
+.wa-bubble-row {
+  display: flex;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  will-change: opacity, transform;
+}
+
+.wa-bubble-row.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.wa-bubble-row.incoming {
+  justify-content: flex-start;
+}
+
+.wa-bubble {
+  max-width: 84%;
+  padding: 0.5rem 0.75rem 0.35rem;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  border-radius: 10px;
+  position: relative;
+  word-wrap: break-word;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.wa-bubble.incoming {
+  background-color: var(--wa-bubble-incoming);
+  color: var(--wa-text-primary);
+  border-top-left-radius: 2px;
+}
+
+/* Tail for incoming bubble */
+.wa-bubble.incoming::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -8px;
+  width: 0;
+  height: 0;
+  border-top: 10px solid var(--wa-bubble-incoming);
+  border-left: 10px solid transparent;
+}
+
+.wa-bubble-content p {
+  margin: 0;
+}
+
+.wa-bubble-content p + p {
+  margin-top: 0.35rem;
+}
+
+.wa-highlight {
+  display: block;
+  color: #f8bbd0;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.wa-bubble-meta {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.15rem;
+}
+
+.wa-time {
+  font-size: 0.68rem;
+  color: var(--wa-text-secondary);
+  user-select: none;
+}
+
+/* ── Gift Message Bubble (WhatsApp Luxury Parcel) ── */
+.wa-gift-bubble {
+  max-width: 90%;
+  background: linear-gradient(180deg, #1b242b 0%, #131b20 100%);
+  border: 1px solid rgba(212, 168, 83, 0.2);
+  border-radius: 16px;
+  border-top-left-radius: 2px;
+  padding: 0.75rem 0.95rem 0.65rem;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.wa-gift-display {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
-  opacity: 0;
-  transform: scale(0);
-  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  padding: 0.2rem 0 0.4rem;
+  gap: 0.6rem;
 }
 
-.gift-section.show {
-  opacity: 1;
-  transform: scale(1);
+/* Luxury Ambient Stage */
+.gift-stage {
+  width: 100%;
+  height: 116px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: radial-gradient(ellipse at 50% 68%, rgba(212, 168, 83, 0.1) 0%, transparent 66%);
 }
 
+/* Gift Box styling inside WA Card (Bespoke SVG Luxury Parcel) */
 .gift-box {
   position: relative;
-  width: 120px;
-  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  animation: giftBounce 2s ease-in-out infinite;
+  animation: giftFloatCalm 4s ease-in-out infinite;
   -webkit-tap-highlight-color: transparent;
+  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+
+.gift-box:hover {
+  transform: translateY(-3px) scale(1.02);
 }
 
 .gift-box:active {
-  animation-play-state: paused;
-  transform: scale(0.95);
+  transform: scale(0.97);
 }
 
-@keyframes giftBounce {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-8px) rotate(-1.5deg); }
-  50% { transform: translateY(-3px) rotate(0deg); }
-  75% { transform: translateY(-10px) rotate(1.5deg); }
+.gift-svg {
+  display: block;
+  overflow: visible;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.45));
 }
 
-.gift-body {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 70px;
-  background: linear-gradient(135deg, #c2185b, #e91e63);
-  border-radius: 6px;
-  overflow: hidden;
-  box-shadow: 0 8px 25px rgba(194, 24, 91, 0.3), inset 0 -3px 0 rgba(0,0,0,0.1);
+@keyframes giftFloatCalm {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
 }
 
-.gift-ribbon-v {
-  position: absolute; left: 50%; top: 0; bottom: 0;
-  width: 16px; transform: translateX(-50%);
-  background: linear-gradient(180deg, var(--gold-light), var(--gold));
+/* Opening lid animation */
+.svg-gift-lid {
+  transform-origin: 80px 50px;
+  transition: transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease;
+  will-change: transform, opacity;
 }
 
-.gift-ribbon-h {
-  position: absolute; top: 50%; left: 0; right: 0;
-  height: 16px; transform: translateY(-50%);
-  background: linear-gradient(90deg, var(--gold-light), var(--gold));
-}
-
-.gift-lid {
-  position: absolute; top: 0; left: -6px; right: -6px;
-  height: 32px;
-  background: linear-gradient(135deg, #d81b60, #f06292);
-  border-radius: 6px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.15), inset 0 2px 0 rgba(255,255,255,0.1);
-  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
-  z-index: 2;
-}
-
-.gift-box.opening .gift-lid {
-  transform: translateY(-30px) rotate(-15deg);
+.gift-box.opening .svg-gift-lid {
+  transform: translateY(-34px) rotate(-14deg);
   opacity: 0;
 }
 
-.gift-ribbon-top {
-  position: absolute; left: 50%; top: -14px;
-  transform: translateX(-50%);
-  width: 36px; height: 28px;
+/* Subtle dangling tag sway */
+.svg-gift-tag {
+  transform-origin: 75px 46px;
+  animation: tagSway 3.6s ease-in-out infinite alternate;
+  will-change: transform;
 }
 
-.gift-ribbon-top::before,
-.gift-ribbon-top::after {
-  content: '';
-  position: absolute; top: 4px;
-  width: 16px; height: 20px;
-  border-radius: 50% 50% 0 50%;
-  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+@keyframes tagSway {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(-3.5deg); }
 }
 
-.gift-ribbon-top::before { left: 1px; transform: rotate(-15deg); }
-.gift-ribbon-top::after { right: 1px; border-radius: 50% 50% 50% 0; transform: rotate(15deg); }
-
-.gift-shadow {
-  position: absolute; bottom: -8px; left: 10%; right: 10%;
-  height: 10px;
-  background: radial-gradient(ellipse, rgba(0,0,0,0.25) 0%, transparent 70%);
-  border-radius: 50%;
+.wa-gift-instructions {
+  text-align: center;
+  max-width: 280px;
 }
 
-.gift-tap-text {
-  font-size: 0.82rem;
+.wa-gift-title {
+  font-family: 'Lora', Georgia, serif;
+  font-style: italic;
+  font-size: 1.12rem;
+  font-weight: 500;
+  color: #fbf7f0;
+  letter-spacing: 0.01em;
+  margin-bottom: 0.25rem;
+}
+
+.wa-gift-sub {
+  font-size: 0.78rem;
+  color: #8e9ca6;
+  line-height: 1.45;
+}
+
+.wa-gift-actions {
+  width: 100%;
+  margin-top: 0.65rem;
+}
+
+.wa-open-btn {
+  width: 100%;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0 1rem;
+  background: linear-gradient(180deg, #009977 0%, #00775c 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 12px;
+  font-size: 0.86rem;
   font-weight: 600;
-  color: var(--text-muted);
-  letter-spacing: 0.06em;
-  animation: tapPulse 2s ease-in-out infinite;
+  letter-spacing: 0.02em;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 153, 119, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  transition: all 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+  -webkit-tap-highlight-color: transparent;
 }
 
-@keyframes tapPulse {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
+.wa-open-btn:hover {
+  background: linear-gradient(180deg, #00aa84 0%, #008769 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 153, 119, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.wa-open-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 8px rgba(0, 153, 119, 0.2);
+}
+
+/* ── WhatsApp Footer (Input Bar) ────── */
+.wa-footer {
+  background-color: var(--wa-footer-bg);
+  padding: 0.5rem 0.6rem;
+  padding-bottom: calc(0.5rem + var(--sab));
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-top: 1px solid var(--wa-border);
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+.wa-input-pill {
+  flex: 1;
+  height: 44px;
+  background-color: var(--wa-input-bg);
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+  gap: 0.3rem;
+}
+
+.wa-input-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.wa-text-input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--wa-text-primary);
+  font-size: 0.92rem;
+  font-family: inherit;
+  padding: 0 0.2rem;
+  cursor: default;
+}
+
+.wa-text-input::placeholder {
+  color: var(--wa-text-secondary);
+}
+
+.wa-mic-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: var(--wa-accent);
+  color: #0b141a;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 168, 132, 0.35);
+  transition: transform 0.18s ease, background-color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.wa-mic-btn:hover {
+  background-color: var(--wa-accent-light);
+  transform: scale(1.05);
+}
+
+.wa-mic-btn:active {
+  transform: scale(0.95);
 }
 
 /* =========================================
@@ -319,37 +746,219 @@ html, body {
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  z-index: 10;
-  padding: var(--sat) var(--sar) var(--sab) var(--sal);
+  z-index: 100;
+  padding: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s ease, backdrop-filter 0.4s ease;
+}
+
+#message-layer.active {
+  pointer-events: auto;
+  opacity: 1;
+  visibility: visible;
+  background: rgba(10, 5, 12, 0.68);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}
+
+.message-card-backdrop {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
 }
 
 .message-card {
   pointer-events: auto;
-  max-width: 380px;
-  width: 88%;
+  max-width: 440px;
+  width: 92%;
+  max-height: 88vh;
+  overflow-y: auto;
+  overflow-x: hidden;
   opacity: 0;
-  transform: translateY(30px) scale(0.95);
-  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: perspective(1200px) translateY(35px) rotateX(15deg) scale(0.92);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  perspective: 1200px;
+  position: relative;
+  z-index: 2;
+  border-radius: 24px;
 }
 
 .message-card.visible {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: perspective(1200px) translateY(0) rotateX(0deg) scale(1);
+  animation: antigravityLevitate 7s ease-in-out infinite alternate;
+}
+
+.message-card::-webkit-scrollbar {
+  width: 5px;
+  display: block;
+}
+
+.message-card::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+}
+
+.message-card::-webkit-scrollbar-thumb {
+  background: rgba(212, 168, 83, 0.35);
+  border-radius: 4px;
+}
+
+@keyframes antigravityLevitate {
+  0% { transform: translateY(0px) rotateX(0deg); }
+  100% { transform: translateY(-8px) rotateX(1.8deg); }
 }
 
 .card-inner {
   position: relative;
-  background: rgba(26, 16, 24, 0.92);
-  -webkit-backdrop-filter: blur(28px);
-  backdrop-filter: blur(28px);
-  border: 1px solid rgba(212, 168, 83, 0.12);
-  border-radius: 20px;
-  padding: 2rem 1.6rem 1.6rem;
+  background: linear-gradient(155deg, rgba(32, 17, 30, 0.90), rgba(16, 9, 20, 0.95));
+  -webkit-backdrop-filter: blur(32px) saturate(190%);
+  backdrop-filter: blur(32px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-top: 1px solid rgba(255, 255, 255, 0.32);
+  border-bottom: 1px solid rgba(212, 168, 83, 0.4);
+  border-radius: 24px;
+  padding: 1.8rem 1.6rem 1.6rem;
   text-align: center;
   box-shadow:
-    0 24px 64px rgba(0,0,0,0.5),
-    0 0 80px rgba(139, 26, 58, 0.06),
-    inset 0 1px 0 rgba(255,255,255,0.04);
+    0 35px 85px -15px rgba(0, 0, 0, 0.8),
+    0 0 50px rgba(244, 156, 184, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  transform-style: preserve-3d;
+}
+
+.card-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  color: #eed6c4;
+  font-size: 1.35rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  z-index: 5;
+}
+
+.card-close:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: scale(1.1);
+}
+
+.card-header-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+
+.card-atelier-badge {
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 5px;
+  color: var(--gold);
+  margin-bottom: 0.25rem;
+  opacity: 0.85;
+}
+
+.card-badge {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.3rem;
+  color: var(--gold-light);
+  margin-bottom: 0.1rem;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 14px rgba(212, 168, 83, 0.35);
+  line-height: 1.2;
+}
+
+.card-letter-content {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(212, 168, 83, 0.2);
+  border-radius: 16px;
+  padding: 1.1rem 1.2rem;
+  margin-bottom: 1.1rem;
+  text-align: left;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.card-letter-body {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 0.88rem;
+  line-height: 1.68;
+  color: #f2e4da;
+  font-style: italic;
+  margin-bottom: 0.8rem;
+}
+
+.card-letter-sign {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  text-align: right;
+  line-height: 1.3;
+}
+
+.signature-name {
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.7rem;
+  color: var(--gold-light);
+  display: inline-block;
+  margin-top: 0.15rem;
+}
+
+.reply-section {
+  text-align: left;
+}
+
+.reply-title {
+  display: block;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin-bottom: 0.5rem;
+  opacity: 0.9;
+}
+
+.quick-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 0.75rem;
+}
+
+.chip-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 20px;
+  color: #f0ddd0;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.73rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.chip-btn:hover {
+  background: rgba(212, 168, 83, 0.24);
+  border-color: rgba(212, 168, 83, 0.6);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.chip-btn:active {
+  transform: scale(0.96);
 }
 
 .card-prompt {
@@ -507,23 +1116,25 @@ html, body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(26, 16, 24, 0.88);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(212, 168, 83, 0.22);
-  border-radius: 12px;
-  padding: 0.45rem 0.85rem;
+  background: linear-gradient(135deg, rgba(30, 16, 28, 0.8), rgba(18, 10, 18, 0.88));
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 14px;
+  padding: 0.5rem 0.95rem;
   white-space: nowrap;
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
   animation: hintPulse 2.5s ease-in-out infinite;
 }
 
 @keyframes hintPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 168, 83, 0.12); }
-  50% { box-shadow: 0 0 14px 3px rgba(212, 168, 83, 0.1); }
+  0%, 100% { box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.5), 0 0 0 0 rgba(212, 168, 83, 0.15); }
+  50% { box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.5), 0 0 18px 4px rgba(212, 168, 83, 0.22); }
 }
 
 .bloom-hint-text {
-  font-size: 0.72rem;
+  font-size: 0.74rem;
   font-weight: 600;
   color: var(--gold-light);
   letter-spacing: 0.03em;
@@ -541,7 +1152,7 @@ html, body {
 }
 
 /* =========================================
-   CONTROLS HINT
+   CONTROLS HINT (SPATIAL MINIMAL GLASS)
    ========================================= */
 .controls-hint {
   position: fixed;
@@ -550,12 +1161,19 @@ html, body {
   transform: translateX(-50%);
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.7rem;
+  gap: 0.55rem;
+  font-size: 0.72rem;
   font-weight: 600;
-  color: var(--text-muted);
-  letter-spacing: 0.1em;
+  color: rgba(245, 237, 228, 0.65);
+  letter-spacing: 0.08em;
   text-transform: lowercase;
+  background: rgba(18, 10, 18, 0.6);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 50px;
+  padding: 0.45rem 1.1rem;
+  box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.45);
   z-index: 5;
   opacity: 0;
   animation: fadeIn 1s ease 1.5s both;
@@ -572,11 +1190,11 @@ html, body {
 
 .hint-icon {
   color: var(--gold);
-  font-size: 0.5rem;
+  font-size: 0.55rem;
 }
 
 /* =========================================
-   BLOOM BUTTON
+   BLOOM BUTTON (ANTIGRAVITY FLOATING PILL)
    ========================================= */
 .bloom-button {
   position: fixed;
@@ -584,20 +1202,38 @@ html, body {
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
-  background: linear-gradient(135deg, rgba(139, 26, 58, 0.65), rgba(194, 24, 91, 0.45));
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(229, 115, 151, 0.18);
+  background: linear-gradient(135deg, rgba(46, 22, 40, 0.8), rgba(24, 12, 22, 0.9));
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(244, 156, 184, 0.35);
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: 50px;
-  padding: 0.7rem 1.8rem;
+  padding: 0.75rem 2rem;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow:
+    0 20px 45px -8px rgba(0, 0, 0, 0.6),
+    0 0 30px rgba(244, 156, 184, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
   opacity: 0;
-  animation: fadeIn 0.8s ease 2s both;
+  animation: fadeIn 0.8s ease 2s both, floatPill 5s ease-in-out 2.8s infinite alternate;
   -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes floatPill {
+  0% { transform: translateX(-50%) translateY(0); }
+  100% { transform: translateX(-50%) translateY(-5px); }
+}
+
+.bloom-button:hover {
+  border-color: rgba(244, 156, 184, 0.6);
+  box-shadow:
+    0 26px 52px -6px rgba(0, 0, 0, 0.7),
+    0 0 40px rgba(244, 156, 184, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
 
 .bloom-button:active {
@@ -606,7 +1242,7 @@ html, body {
 
 .bloom-text {
   font-family: 'Nunito', sans-serif;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 700;
   color: var(--text-light);
   letter-spacing: 0.12em;
@@ -631,28 +1267,338 @@ html, body {
 }
 
 /* =========================================
-   MSG TOGGLE BUTTON
+   WHATSAPP NATIVE AUDIO STATUS BAR
+   ========================================= */
+.wa-audio-bar {
+  background-color: #111b21;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.75rem;
+  gap: 0.6rem;
+  flex-shrink: 0;
+  z-index: 9;
+}
+
+.wa-audio-play-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #00a884;
+  color: #111b21;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.wa-audio-play-btn:hover {
+  background: #02b68f;
+  transform: scale(1.06);
+}
+
+.wa-audio-track-info {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  overflow: hidden;
+  flex: 1;
+}
+
+.wa-audio-waves {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+  width: 14px;
+  flex-shrink: 0;
+}
+
+.wa-wave-bar {
+  width: 2px;
+  background: #00a884;
+  border-radius: 2px;
+  height: 3px;
+  transition: height 0.2s ease;
+}
+
+.wa-audio-bar.playing .wa-wave-bar:nth-child(1) {
+  animation: waWave 0.9s ease-in-out infinite alternate;
+}
+.wa-audio-bar.playing .wa-wave-bar:nth-child(2) {
+  animation: waWave 1.2s ease-in-out 0.2s infinite alternate;
+}
+.wa-audio-bar.playing .wa-wave-bar:nth-child(3) {
+  animation: waWave 0.8s ease-in-out 0.4s infinite alternate;
+}
+.wa-audio-bar.playing .wa-wave-bar:nth-child(4) {
+  animation: waWave 1.1s ease-in-out 0.15s infinite alternate;
+}
+
+@keyframes waWave {
+  0% { height: 2px; }
+  100% { height: 12px; }
+}
+
+.wa-audio-title {
+  font-size: 0.73rem;
+  font-weight: 600;
+  color: #e9edef;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wa-audio-vol-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.wa-vol-icon {
+  color: #8696a0;
+  flex-shrink: 0;
+}
+
+.wa-vol-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 62px;
+  height: 4px;
+  border-radius: 4px;
+  background: #2a3942;
+  outline: none;
+  cursor: pointer;
+}
+
+.wa-vol-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #00a884;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.wa-vol-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+}
+
+.wa-vol-text {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #8696a0;
+  min-width: 28px;
+  text-align: right;
+}
+
+/* =========================================
+   FLOATING 3D MUSIC CONTROLLER (ANTIGRAVITY GLASS)
+   ========================================= */
+.music-controller-3d {
+  position: fixed;
+  top: calc(1.5rem + var(--sat));
+  left: calc(1.5rem + var(--sal));
+  z-index: 15;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: linear-gradient(135deg, rgba(34, 18, 30, 0.8), rgba(18, 10, 18, 0.9));
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-top: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 30px;
+  padding: 0.42rem 0.95rem;
+  color: #f2e4da;
+  font-family: 'Nunito', sans-serif;
+  box-shadow:
+    0 16px 36px -6px rgba(0, 0, 0, 0.6),
+    0 0 20px rgba(212, 168, 83, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.music-controller-3d:hover {
+  transform: scale(1.03);
+  border-color: rgba(212, 168, 83, 0.45);
+  box-shadow:
+    0 20px 42px -4px rgba(0, 0, 0, 0.65),
+    0 0 25px rgba(212, 168, 83, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.music-play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  padding: 0;
+}
+
+.music-play-btn:hover .music-label {
+  color: var(--gold-light);
+}
+
+.music-vol-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+  padding-left: 0.65rem;
+}
+
+.music-vol-icon {
+  color: var(--gold-light);
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.music-vol-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 60px;
+  height: 4px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  outline: none;
+  cursor: pointer;
+}
+
+.music-vol-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gold);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.music-vol-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+}
+
+.music-vol-text {
+  font-size: 0.70rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  min-width: 28px;
+  text-align: right;
+}
+
+.music-icon-wrap {
+  display: flex;
+  align-items: flex-end;
+  gap: 2.5px;
+  height: 14px;
+  width: 14px;
+}
+
+.music-bar {
+  width: 2.5px;
+  background: var(--gold);
+  border-radius: 2px;
+  height: 3px;
+  transition: height 0.25s ease, opacity 0.25s ease;
+}
+
+.music-controller-3d.playing .bar-1 {
+  animation: musicWave 1.1s ease-in-out infinite alternate;
+}
+
+.music-controller-3d.playing .bar-2 {
+  animation: musicWave 1.4s ease-in-out 0.25s infinite alternate;
+}
+
+.music-controller-3d.playing .bar-3 {
+  animation: musicWave 0.9s ease-in-out 0.45s infinite alternate;
+}
+
+@keyframes musicWave {
+  0% { height: 3px; }
+  100% { height: 14px; }
+}
+
+.music-controller-3d.paused .music-bar {
+  height: 3px;
+  opacity: 0.35;
+  animation: none;
+}
+
+.music-controller-3d.paused .music-label {
+  opacity: 0.6;
+}
+
+@media (max-width: 600px) {
+  .music-controller-3d {
+    top: calc(1.2rem + var(--sat));
+    left: calc(1.2rem + var(--sal));
+    padding: 0.35rem 0.75rem;
+    gap: 0.5rem;
+  }
+  .music-play-btn {
+    font-size: 0.70rem;
+  }
+  .music-vol-slider {
+    width: 48px;
+  }
+}
+
+/* =========================================
+   MSG TOGGLE BUTTON (ANTIGRAVITY GLASS ORB)
    ========================================= */
 .msg-toggle {
   position: fixed;
   top: calc(1.5rem + var(--sat));
   right: calc(1.5rem + var(--sar));
   z-index: 15;
-  width: 44px; height: 44px;
-  background: rgba(26, 16, 24, 0.55);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(212, 168, 83, 0.12);
+  width: 48px; height: 48px;
+  background: linear-gradient(135deg, rgba(34, 18, 30, 0.75), rgba(18, 10, 18, 0.85));
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-top: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--gold);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow:
+    0 16px 36px -6px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
   opacity: 0;
   animation: fadeIn 0.6s ease 2.5s both;
   -webkit-tap-highlight-color: transparent;
+}
+
+.msg-toggle:hover {
+  transform: scale(1.06);
+  border-color: rgba(212, 168, 83, 0.4);
+  box-shadow:
+    0 20px 42px -4px rgba(0, 0, 0, 0.65),
+    0 0 25px rgba(212, 168, 83, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
 
 .msg-toggle:active {
@@ -661,13 +1607,13 @@ html, body {
 
 .msg-toggle.hint-glow {
   animation: msgGlowPulse 1.8s ease-in-out infinite !important;
-  border-color: rgba(212, 168, 83, 0.4) !important;
+  border-color: rgba(212, 168, 83, 0.5) !important;
   opacity: 1 !important;
 }
 
 @keyframes msgGlowPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 168, 83, 0.2); }
-  50% { box-shadow: 0 0 22px 7px rgba(212, 168, 83, 0.18); }
+  0%, 100% { box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.55), 0 0 0 0 rgba(212, 168, 83, 0.2); }
+  50% { box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.55), 0 0 26px 8px rgba(212, 168, 83, 0.24); }
 }
 
 /* =========================================
